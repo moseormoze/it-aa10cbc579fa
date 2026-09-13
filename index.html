@@ -127,31 +127,50 @@ body{margin:0;background:#fff;-webkit-text-size-adjust:100%}
 #italy-clean a:focus-visible,#italy-clean button:focus-visible,#italy-clean summary:focus-visible,#italy-clean select:focus-visible{outline:2px solid #2455d6;outline-offset:4px}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
-/* Expense totals and status detail retain the existing compact visual language. */
-#italy-clean .money-pair strong{direction:ltr;unicode-bidi:isolate;text-align:right;font-size:21px;letter-spacing:-.45px}
-#italy-clean .payment-question{margin-bottom:27px}
-#italy-clean .payment-question summary{font-size:13px}
+/* Keep RTL descriptions separate from LTR amounts in stable columns. */
+#italy-clean .money-pair{grid-template-columns:repeat(2,minmax(0,1fr))}
+#italy-clean .money-pair>div{min-width:0}
+#italy-clean .money-pair strong{direction:ltr;unicode-bidi:isolate;text-align:right;font-size:21px;letter-spacing:-.45px;white-space:nowrap}
+#italy-clean .balance-label,#italy-clean .balance-caption{display:block}
+#italy-clean .payment-question{margin:0 0 25px}
 #italy-clean .expense-heading{font-size:18px;margin-top:25px}
+#italy-clean :is(#expense-groups,.payment-question) summary{display:grid;grid-template-columns:minmax(0,1fr) max-content 16px;column-gap:14px;line-height:1.5}
+#italy-clean :is(#expense-groups,.payment-question) summary .sum{margin:0;text-align:left}
+#italy-clean :is(#expense-groups,.payment-question) summary::after{text-align:center;font-size:18px}
+#italy-clean .payment-question summary{font-size:12px;column-gap:10px}
+#italy-clean .payment-question summary .sum{font-size:12px}
+#italy-clean .money-line{display:grid;grid-template-columns:minmax(0,1fr) max-content;gap:14px;padding:15px 0;line-height:1.55}
 #italy-clean .money-description{min-width:0}
-#italy-clean .money-line .num{text-align:left;flex-shrink:0;font-size:12px}
-#italy-clean .payment-status{color:var(--guide-text);font-weight:500}
-#italy-clean .payment-status.paid{color:#2455d6}
-@media(max-width:360px){#italy-clean .money-pair{grid-template-columns:1fr}#italy-clean .money-pair>div+div{border-inline-start:0;padding-inline-start:0;border-top:1px solid var(--guide-line);padding-top:12px}}
-
+#italy-clean .money-line .num{text-align:left;font-size:13px;line-height:1.55}
+#italy-clean .payment-status{font-weight:500}
 #italy-clean .euro-summary{display:block;direction:ltr;text-align:right;margin:3px 0 7px}
 #italy-clean #expense-legend{display:flex;flex-wrap:wrap;gap:9px 16px;margin:12px 0 16px;color:var(--guide-soft);font-size:12px}
-#italy-clean #expense-legend>span{display:inline-flex;align-items:center;gap:5px}
-#italy-clean .expense-status-icon{width:18px;height:18px;flex-shrink:0}
-#italy-clean .expense-status-icon.paid{color:#187344}
-#italy-clean .expense-status-icon.known{color:#2455d6}
-#italy-clean .expense-status-icon.estimate{color:#9b620c}
+#italy-clean #expense-legend>span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+#italy-clean .expense-status-icon{display:block;width:18px;height:18px;flex:0 0 18px;margin-top:1px}
+#italy-clean .expense-status-icon.paid,#italy-clean .payment-status.paid{color:#187344}
+#italy-clean .expense-status-icon.known,#italy-clean .payment-status.known{color:#2455d6}
+#italy-clean .expense-status-icon.estimate,#italy-clean .payment-status.estimate{color:#9b620c}
 #italy-clean .expense-title{display:flex;align-items:flex-start;gap:7px}
-#italy-clean .payment-status.paid{color:#187344}
-#italy-clean .payment-status.known{color:#2455d6}
-#italy-clean .payment-status.estimate{color:#9b620c}
+#italy-clean .expense-title>span{min-width:0;unicode-bidi:plaintext}
 #italy-clean summary .sum small{display:block;color:var(--guide-soft);font-size:11px;font-weight:400;text-align:left;margin-top:4px}
-#italy-clean .money-description>small{margin-inline-start:25px}
-#italy-clean .payment-question summary{flex-wrap:wrap}
+#italy-clean .money-description>small{margin-inline-start:25px;line-height:1.6}
+@media(max-width:480px){
+ #italy-clean .money-pair{grid-template-columns:1fr;gap:0;margin-bottom:12px}
+ #italy-clean .money-pair>div{display:grid;grid-template-columns:minmax(0,1fr) max-content;column-gap:12px;row-gap:3px;padding:14px 0}
+ #italy-clean .money-pair>div+div{border-inline-start:0;padding-inline-start:0;border-top:1px solid var(--guide-line)}
+ #italy-clean .money-pair strong{grid-column:2;grid-row:1;margin:0;font-size:19px;text-align:left;line-height:1.4}
+ #italy-clean .balance-label{grid-column:1;grid-row:1;align-self:center;color:var(--guide-ink);font-size:13px}
+ #italy-clean .balance-caption{grid-column:1;grid-row:2;font-size:11px}
+ #italy-clean .money-pair .euro-summary{grid-column:2;grid-row:2;text-align:left;margin:0;font-size:11px}
+ #italy-clean .budget-total{margin-bottom:8px}
+}
+@media(max-width:360px){
+ #italy-clean :is(#expense-groups,.payment-question) summary{column-gap:8px;font-size:14px}
+ #italy-clean :is(#expense-groups,.payment-question) summary .sum{font-size:13px}
+ #italy-clean .payment-question summary,#italy-clean .payment-question summary .sum{font-size:11px}
+ #italy-clean .money-line{column-gap:10px}
+ #italy-clean .money-line .num{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -171,7 +190,7 @@ body{margin:0;background:#fff;-webkit-text-size-adjust:100%}
 
   <section data-screen="money" hidden><div class="eyebrow">הטיול כולו · לזוג · עודכן 13.9</div><h1>הוצאות</h1>
    <div class="budget-total"><div class="small">סה״כ צפוי לטיול</div><div class="amount" id="money-total"></div><div class="small euro-summary" id="money-total-eur"></div><div class="small" id="money-total-range"></div></div>
-   <div class="money-pair"><div><span class="small">שולם</span><strong id="money-paid"></strong><span class="small euro-summary" id="money-paid-eur"></span><span class="small">טיסות ושני המלונות</span></div><div><span class="small">יתרה לתכנון</span><strong id="money-expected"></strong><span class="small euro-summary" id="money-expected-eur"></span><span class="small">הוצאות ידועות ואומדנים שטרם סומנו כשולמו</span></div></div>
+   <div class="money-pair"><div><span class="small balance-label">שולם</span><strong id="money-paid"></strong><span class="small euro-summary" id="money-paid-eur"></span><span class="small balance-caption">טיסות ושני המלונות</span></div><div><span class="small balance-label">יתרה לתכנון</span><strong id="money-expected"></strong><span class="small euro-summary" id="money-expected-eur"></span><span class="small balance-caption">הוצאות ידועות ואומדנים</span></div></div>
    <details class="payment-question"><summary><span>מתוך היתרה: חיובים לבדיקה</span><span class="sum" id="money-unknown"></span></summary><p class="notice">שיט Meditours והמונית לשדה: ההוצאות מתועדות במלואן, אך עדיין לא ידוע אם כבר חויבו.</p><p class="notice" id="money-balance-note"></p></details>
    <h2 class="expense-heading">פירוט העלויות</h2><div id="expense-legend" aria-label="מקרא מצב הוצאה"></div><div id="expense-groups"></div><p class="notice" id="money-fx"></p><p class="notice">האומדן אינו כולל קניות, ביטוח, eSIM והוצאות בישראל. פיקדון קטנוע מוחזר (€150) אינו הוצאה. ההחזרים על ההזמנות שבוטלו סגורים ואינם נספרים שוב.</p></section>
   <section data-screen="details" hidden><div class="eyebrow">כשצריך למצוא מהר</div><h1>פרטים שימושיים</h1><div class="detail-block"><h2>הטיסות</h2><div class="small">הלוך · 29 בספטמבר</div><div class="flight"><div><span>TLV</span><strong>11:00</strong></div><span>→</span><div><span>NAP</span><strong>13:30</strong></div></div><div class="small">חזור · 4 באוקטובר</div><div class="flight"><div><span>NAP</span><strong>06:00</strong></div><span>→</span><div><span>TLV</span><strong>10:00</strong></div></div><details><summary>כבודה</summary><p>לכל נוסע: מזוודה עד 20 ק״ג ותיק תא נוסעים עד 40×30×20 ס״מ.</p></details></div><div class="detail-block"><h2 dir="ltr">Hotel Capri</h2><div class="small">סורנטו · 29.9–3.10 · 4 לילות</div><p dir="ltr">Corso Italia 212, Sorrento</p><a href="https://www.google.com/maps/search/?api=1&query=Hotel%20Capri%20Corso%20Italia%20212%20Sorrento" target="_blank" rel="noopener noreferrer">פתיחה בניווט ↗</a></div><div class="detail-block"><h2 dir="ltr">Toledo Relais Suites</h2><div class="small">נאפולי · 3.10–4.10 · לילה אחד</div><p dir="ltr">Via Toledo 156, Napoli</p><a href="https://www.google.com/maps/search/?api=1&query=Toledo%20Relais%20Suites%20Via%20Toledo%20156%20Napoli" target="_blank" rel="noopener noreferrer">פתיחה בניווט ↗</a></div><div class="detail-block"><h2>ההעברות</h2><p><strong>29.9 · Curreri לסורנטו</strong><br>14:30 אם מספיקים; אחרת 16:30. קנייה באוטובוס בכפוף למקום פנוי · €26 לזוג עם מזוודות.</p><details><summary>תחנות ושעות גיבוי</summary><p>יוצאים מחניון האוטובוסים בשדה נאפולי ומגיעים לתחנת סורנטו, Piazza De Curtis. כ־5–10 דקות הליכה משם למלון. אם אין מקום, יש גם יציאות ב־18:00 וב־19:30; מקום אינו מובטח.</p><a href="https://www.curreriviaggi.it/en/naples-airport-shuttle" target="_blank" rel="noopener noreferrer">לוח זמנים ↗</a></details><p><strong>3.10 · מעבורת Alilauro לנאפולי</strong><br>10:00 מסורנטו → 10:45 Beverello. מגיעים לנמל ב־09:30. נבחרה בתוכנית; הכרטיסים טרם נרכשו.</p><details><summary>כרטיסים והגעה לנמל</summary><p>€45 לזוג עם שתי מזוודות, לפני עמלת הזמנה אפשרית והגעה לנמל בסורנטו. יש לרכוש כרטיסים ולבדוק את מצב הים והפעלת ההפלגה סמוך לנסיעה. אם ההפלגה מבוטלת, רכבת רגילה לנאפולי היא הגיבוי.</p><a href="https://alilauro-tickets.certusonline.com/trips.php?1/2/0/2/0/N/SOR/BEV/2026-10-03" target="_blank" rel="noopener noreferrer">כרטיסים ושעות ↗</a></details><p>4.10 · מונית לשדה לפני טיסת 06:00</p></div></section>
@@ -19741,7 +19760,7 @@ body{margin:0;background:#fff;-webkit-text-size-adjust:100%}
  const paidItems=moneyItems.filter(r=>r.status==='paid'),remainingItems=moneyItems.filter(r=>r.status!=='paid'),unknownItems=moneyItems.filter(r=>r.status==='unknown');
  const total=totals(moneyItems),paid=totals(paidItems),remaining=totals(remainingItems),unknown=totals(unknownItems);
  root.querySelector('#money-total').textContent='≈ ₪'+number(Math.round((total[0]+total[1])/200)*100);
- root.querySelector('#money-total-range').textContent='טווח תכנון: '+moneyRange(...total)+' · כולל רזרבה';
+ root.querySelector('#money-total-range').innerHTML='טווח תכנון: <bdi dir="ltr">'+moneyRange(...total)+'</bdi> · כולל רזרבה';
  root.querySelector('#money-total-eur').textContent=euroDisplay(moneyItems);
  root.querySelector('#money-paid').textContent='≈ '+moneyRange(...paid);
  root.querySelector('#money-paid-eur').textContent=euroDisplay(paidItems,2);
